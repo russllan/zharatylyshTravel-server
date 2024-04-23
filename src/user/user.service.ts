@@ -1,26 +1,61 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+  ) {}
+
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: { email: createUserDto.email },
+    });
+    if (user)
+      throw new BadRequestException(
+        `Такой пользователь ${createUserDto.email} уже существует!`,
+      );
+
+    const newUser = {
+      email: createUserDto.email,
+      password: createUserDto.password,
+      role: createUserDto.role,
+    };
+    if (!newUser) throw new BadRequestException(`Введите все атрибуты`);
+    return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    const user = await this.userRepository.find();
+    if (!user) throw new NotFoundException('Пользователей нет!');
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!user) throw new NotFoundException(`Пользователь с ${id} не найден!`);
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!user) throw new NotFoundException(`Такого пользователя с ${id} нет!`);
+    return await this.userRepository.remove(user);
   }
 }
