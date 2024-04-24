@@ -6,6 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { TourModule } from './tour/tour.module';
 import { MailerModule } from './mailer/mailer.module';
+import { SightsModule } from './sights/sights.module';
+import { ReviewModule } from './review/review.module';
+import { SightImageModule } from './sight-image/sight-image.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { MailerModule } from './mailer/mailer.module';
     UserModule,
     TourModule,
     MailerModule,
+    SightsModule,
+    ReviewModule,
+    SightImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
