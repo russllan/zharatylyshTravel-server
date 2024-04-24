@@ -1,26 +1,69 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTourDto } from './dto/create-tour.dto';
 import { UpdateTourDto } from './dto/update-tour.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Tour } from './entities/tour.entity';
 
 @Injectable()
 export class TourService {
-  create(createTourDto: CreateTourDto) {
-    return 'This action adds a new tour';
+  constructor(
+    @InjectRepository(Tour) private readonly tourRepository: Repository<Tour>,
+  ) {}
+  async create(createTourDto: CreateTourDto) {
+    const isExist = await this.tourRepository.findBy({
+      title: createTourDto.title,
+    });
+    if (isExist.length)
+      throw new BadRequestException('Такой тур уже существует!');
+    const newTour = {
+      title: createTourDto.title,
+      startDate: createTourDto.startDate,
+      endDate: createTourDto.endDate,
+      price: createTourDto.price,
+      amount: createTourDto.amount,
+      img: createTourDto.img,
+      description: createTourDto.description,
+      location: createTourDto.location,
+      user: createTourDto.user,
+    };
+    if (!newTour) throw new BadRequestException('Something went wrond...');
+    return await this.tourRepository.save(newTour);
   }
 
-  findAll() {
-    return `This action returns all tour`;
+  async findAll() {
+    const tours = await this.tourRepository.find({
+      relations: { review: true, user: true, sights: true },
+    });
+    if (!tours) throw new NotFoundException('Туров не найдено!');
+    return tours;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tour`;
+  async findOne(id: number) {
+    const tour = await this.tourRepository.findOne({
+      where: { id: id },
+    });
+    if (!tour) throw new NotFoundException('Такого тура нет!');
+    return tour;
   }
 
-  update(id: number, updateTourDto: UpdateTourDto) {
-    return `This action updates a #${id} tour`;
+  async update(id: number, updateTourDto: UpdateTourDto) {
+    const tour = await this.tourRepository.findOne({
+      where: { id: id },
+    });
+    if (!tour) throw new NotFoundException('Такого тура нет!');
+    return await this.tourRepository.update(id, updateTourDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tour`;
+  async remove(id: number) {
+    const tour = await this.tourRepository.findOne({
+      where: { id: id },
+    });
+    if (!tour) throw new NotFoundException('Такого тура нет!');
+    return await this.tourRepository.delete(id);
   }
 }
