@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 import { Review } from "../../review/entities/review.entity";
 import { User } from "src/user/entities/user.entity";
 import { Sight } from "src/sights/entities/sight.entity";
+import { BookedTour } from "src/booked-tour/entities/booked-tour.entity";
 
 @Entity('tour')
 export class Tour {
@@ -42,4 +43,7 @@ export class Tour {
 
   @OneToMany(() => Sight, (sight) => sight.tour, {onDelete: 'CASCADE'})
   sights: Sight[]
+
+  @OneToMany(() => BookedTour, (bookedTour) => bookedTour.tour, {onDelete: 'CASCADE'})
+  bookedTour: BookedTour[]
 }

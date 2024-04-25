@@ -1,3 +1,4 @@
+import { BookedTour } from "src/booked-tour/entities/booked-tour.entity";
 import { Review } from "src/review/entities/review.entity";
 import { Sight } from "src/sights/entities/sight.entity";
 import { Tour } from "src/tour/entities/tour.entity";
@@ -35,4 +36,7 @@ export class User {
 
     @OneToMany(() => Sight, (sight) => sight.user, {onDelete: 'CASCADE'})
     sights: Sight[]
+
+    @OneToMany(() => BookedTour, (booked) => booked.user, {onDelete: 'CASCADE'})
+    bookedTour: BookedTour[]
 }
