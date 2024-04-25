@@ -53,7 +53,7 @@ export class UserService {
       },
     });
     if (!user) throw new BadRequestException('Вы не зарегистрированы!');
-    return `Вы успешно авторизовались ${user}`;
+    return user;
   }
 
   async findAll() {
