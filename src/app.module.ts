@@ -9,6 +9,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { SightsModule } from './sights/sights.module';
 import { ReviewModule } from './review/review.module';
 import { SightImageModule } from './sight-image/sight-image.module';
+import { BookedTourModule } from './booked-tour/booked-tour.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { SightImageModule } from './sight-image/sight-image.module';
     SightsModule,
     ReviewModule,
     SightImageModule,
+    BookedTourModule,
   ],
   controllers: [AppController],
   providers: [AppService],
