@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,14 +15,19 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // @Get()
+  // sendEmail() {
+  //   return this.userService.sendEmail();
+  // }
+
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
-  
-  @Post('register')
-  async registerUser(@Body() userData: any) {
-      return { message: 'Подтверждение отправлено на вашу почту' };
+
+  @Post('auth')
+  auth(@Body() createUserDto: CreateUserDto) {
+    return this.userService.auth(createUserDto)
   }
 
   @Get('get')
