@@ -19,6 +19,9 @@ export class User {
     password: string
 
     @Column()
+    confirmationCode: string
+
+    @Column()
     role: string
 
     @Column({nullable: true})

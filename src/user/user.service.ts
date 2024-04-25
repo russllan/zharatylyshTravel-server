@@ -8,12 +8,24 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly mailService: MailerService,
   ) {}
+
+  async sendEmail() {
+    this.mailService.sendMail({
+      from: 'rahmatov.ruslan02@example.com',
+      to: 'rahmatov.ruslan.02@example.com',
+      subject: 'subject',
+      text: 'text',
+      html: '<b>welcome html</b>',
+    });
+  }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.findOne({
@@ -31,6 +43,17 @@ export class UserService {
     };
     if (!newUser) throw new BadRequestException(`Введите все атрибуты`);
     return await this.userRepository.save(newUser);
+  }
+
+  async auth(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: {
+        email: createUserDto.email,
+        password: createUserDto.password,
+      },
+    });
+    if (!user) throw new BadRequestException('Вы не зарегистрированы!');
+    return user;
   }
 
   async findAll() {

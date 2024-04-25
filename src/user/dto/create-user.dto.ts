@@ -7,8 +7,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
-  @IsNotEmpty()
-  role: string;
+  // @IsNotEmpty()
+  role?: string;
   
   country?: string;
   cardNumber?: string;
