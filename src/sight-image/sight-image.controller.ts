@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SightImageService } from './sight-image.service';
 import { CreateSightImageDto } from './dto/create-sight-image.dto';
 import { UpdateSightImageDto } from './dto/update-sight-image.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('sight-image')
 @Controller('sight-image')
 export class SightImageController {
   constructor(private readonly sightImageService: SightImageService) {}
