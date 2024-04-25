@@ -8,24 +8,24 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { MailerService } from '@nestjs-modules/mailer';
+// import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly mailService: MailerService,
+    // private readonly mailService: MailerService,
   ) {}
 
-  async sendEmail() {
-    this.mailService.sendMail({
-      from: 'rahmatov.ruslan02@example.com',
-      to: 'rahmatov.ruslan.02@example.com',
-      subject: 'subject',
-      text: 'text',
-      html: '<b>welcome html</b>',
-    });
-  }
+  // async sendEmail() {
+  //   this.mailService.sendMail({
+  //     from: 'rahmatov.ruslan02@example.com',
+  //     to: 'rahmatov.ruslan.02@example.com',
+  //     subject: 'subject',
+  //     text: 'text',
+  //     html: '<b>welcome html</b>',
+  //   });
+  // }
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepository.findOne({
@@ -53,7 +53,7 @@ export class UserService {
       },
     });
     if (!user) throw new BadRequestException('Вы не зарегистрированы!');
-    return user;
+    return `Вы успешно авторизовались ${user}`;
   }
 
   async findAll() {
@@ -70,8 +70,12 @@ export class UserService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({
+      where: {id: id}
+    })
+    if(!user) throw new NotFoundException('Такого пользователя нет!')
+    return await this.userRepository.update(id, updateUserDto);
   }
 
   async remove(id: number) {
@@ -79,6 +83,6 @@ export class UserService {
       where: { id: id },
     });
     if (!user) throw new NotFoundException(`Такого пользователя с ${id} нет!`);
-    return await this.userRepository.remove(user);
+    return await this.userRepository.delete(id);
   }
 }

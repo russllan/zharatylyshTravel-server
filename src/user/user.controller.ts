@@ -15,10 +15,10 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
-  sendEmail() {
-    return this.userService.sendEmail();
-  }
+  // @Get()
+  // sendEmail() {
+  //   return this.userService.sendEmail();
+  // }
 
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
