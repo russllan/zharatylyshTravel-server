@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: 'https://skihub-server-production.up.railway.app/', // Разрешенный источник запросов (замените на свой домен)
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Разрешенные методы HTTP
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Разрешенные методы HTTP
     allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки запросов
   });
 
