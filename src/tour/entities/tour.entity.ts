@@ -33,8 +33,8 @@ export class Tour {
   @Column()
   location: string;
 
-  @Column({nullable: true, type: 'float'})
-  average: number
+  // @Column({nullable: true, type: 'float'})
+  // average: number
 
   // relation
   @OneToMany(() => Review, (review) => review.tour, {onDelete: 'CASCADE'})
