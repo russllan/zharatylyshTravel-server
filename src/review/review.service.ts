@@ -18,6 +18,7 @@ export class ReviewService {
     });
     if (isExist.length)
       throw new BadRequestException('Такой отзыв уже существует!');
+    
     const newReview = {
       rating: createReviewDto.rating,
       comment: createReviewDto.comment,

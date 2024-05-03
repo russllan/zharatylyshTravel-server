@@ -1,4 +1,4 @@
-import { SightImage } from "src/sight-image/entities/sight-image.entity";
+// import { SightImage } from "src/sight-image/entities/sight-image.entity";
 import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -14,6 +14,9 @@ export class Sight {
     @Column()
     img: string
 
+    @Column({type: 'jsonb', nullable: true})
+    imgList: string[]
+
     @Column()
     description: string
 
@@ -26,6 +29,6 @@ export class Sight {
     @JoinColumn({name: 'tour_id'})
     tour: Tour
 
-    @OneToMany(() => SightImage, (sightImage) => sightImage.sight, {onDelete: 'CASCADE'})
-    imgList: SightImage[]
+    // @OneToMany(() => SightImage, (sightImage) => sightImage.sight, {onDelete: 'CASCADE'})
+    // imgList: SightImage[]
 }

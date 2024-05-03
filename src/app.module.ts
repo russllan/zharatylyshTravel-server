@@ -7,7 +7,7 @@ import { UserModule } from './user/user.module';
 import { TourModule } from './tour/tour.module';
 import { SightsModule } from './sights/sights.module';
 import { ReviewModule } from './review/review.module';
-import { SightImageModule } from './sight-image/sight-image.module';
+// import { SightImageModule } from './sight-image/sight-image.module';
 import { BookedTourModule } from './booked-tour/booked-tour.module';
 
 @Module({
@@ -31,7 +31,7 @@ import { BookedTourModule } from './booked-tour/booked-tour.module';
     TourModule,
     SightsModule,
     ReviewModule,
-    SightImageModule,
+    // SightImageModule,
     BookedTourModule,
   ],
   controllers: [AppController],
