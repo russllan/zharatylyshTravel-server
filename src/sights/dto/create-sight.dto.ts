@@ -23,12 +23,12 @@ export class CreateSightDto {
   @IsString()
   description: string;
 
-  // @ApiProperty({ type: 'number' })
-  // @IsOptional()
-  // imgList?: SightImage;
-  
   @ApiProperty({ required: true, type: 'number' })
   @IsNotEmpty()
   tour: Tour;
+
+  // @ApiProperty({ type: 'number' })
+  // @IsOptional()
+  // imgList?: SightImage;
 
 }
