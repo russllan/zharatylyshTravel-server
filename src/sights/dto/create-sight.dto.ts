@@ -1,29 +1,34 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString,IsNotEmpty, IsOptional } from 'class-validator';
-import { SightImage } from 'src/sight-image/entities/sight-image.entity';
+import { IsString, IsNotEmpty, IsOptional, IsArray } from 'class-validator';
+// import { SightImage } from 'src/sight-image/entities/sight-image.entity';
 import { Tour } from 'src/tour/entities/tour.entity';
 
 export class CreateSightDto {
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @IsNotEmpty()
-  @IsString()
   img: string;
 
-  @ApiProperty()
+  @ApiProperty({type: [String]})
+  @IsOptional()
+  @IsArray()
+  imgList: string[]
+
+  @ApiProperty({ required: true })
   @IsNotEmpty()
   @IsString()
   description: string;
 
-  @ApiProperty()
-  @IsOptional()
-  imgList?: SightImage;
-
-  @ApiProperty()
+  // @ApiProperty({ type: 'number' })
+  // @IsOptional()
+  // imgList?: SightImage;
+  
+  @ApiProperty({ required: true, type: 'number' })
   @IsNotEmpty()
-  tour: Tour
+  tour: Tour;
+
 }

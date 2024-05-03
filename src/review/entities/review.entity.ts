@@ -12,11 +12,11 @@ export class Review {
 
     @Column()
     rating: number
-
-    @Column()
+    
+    @Column({nullable: true})
     comment: string
 
-    @Column()
+    @Column({nullable: true})
     img: string
 
     // realtion

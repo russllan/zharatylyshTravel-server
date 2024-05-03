@@ -46,6 +46,7 @@ export class TourService {
   async findOne(id: number) {
     const tour = await this.tourRepository.findOne({
       where: { id: id },
+      relations: {review: true, sights: true},
     });
     if (!tour) throw new NotFoundException('Такого тура нет!');
     return tour;

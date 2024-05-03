@@ -8,7 +8,6 @@ import { UpdateSightDto } from './dto/update-sight.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sight } from './entities/sight.entity';
 import { Repository } from 'typeorm';
-import { title } from 'process';
 
 @Injectable()
 export class SightsService {
@@ -29,32 +28,43 @@ export class SightsService {
       title: createSightDto.title,
       img: createSightDto.img,
       description: createSightDto.description,
-      tour: createSightDto.tour
+      imgList: createSightDto.imgList,
+      tour: createSightDto.tour,
     };
     if (!newSight) throw new BadRequestException('Somithing went wrong...');
     return await this.sightsRepository.save(newSight);
   }
 
   async findAll() {
-    const sight = await this.sightsRepository.find({relations: {tour: true}});
+    const sight = await this.sightsRepository.find({
+      relations: { tour: true },
+    });
     if (!sight)
       throw new NotFoundException('Достопримечательности не найдены!');
     return sight;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sight`;
+  async findOne(id: number) {
+    const sight = await this.sightsRepository.findOne({
+      where: { id: id },
+    });
+    if (!sight) throw new NotFoundException('Такой достопримечательности нет!');
+    return sight;
   }
 
-  update(id: number, updateSightDto: UpdateSightDto) {
-    return `This action updates a #${id} sight`;
+  async update(id: number, updateSightDto: UpdateSightDto) {
+    const sight = await this.sightsRepository.findOne({
+      where: { id: id },
+    });
+    if (!sight) throw new NotFoundException('Такой достопримечательности нет!');
+    return await this.sightsRepository.update(id, updateSightDto);
   }
 
   async remove(id: number) {
     const sight = await this.sightsRepository.findOne({
-      where: {id: id}
-    })
-    if(!sight) throw new NotFoundException("Такой достопримечательности нет!")
+      where: { id: id },
+    });
+    if (!sight) throw new NotFoundException('Такой достопримечательности нет!');
     return await this.sightsRepository.delete(id);
   }
 }
