@@ -33,6 +33,9 @@ export class Tour {
   @Column()
   location: string;
 
+  @Column({default: false})
+  isApprove: boolean;
+
   // @Column({nullable: true, type: 'float'})
   // average: number
 

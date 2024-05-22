@@ -25,16 +25,23 @@ export class BookedTourService {
       throw new BadRequestException('Такого тура не существует для брони!');
 
     const isExist = await this.bookedTourRepository.findBy({
-      user: createBookedTourDto.user,
+      tour: { id: +createBookedTourDto.tour },
+      user: { id: +createBookedTourDto.user },
     });
     if (isExist.length)
       throw new BadRequestException('Такой тур уже забронирован!');
 
-    tourData[0].amount -= 1;
+    const selectedTour = tourData[0];
+    if (selectedTour.amount < createBookedTourDto.amount) {
+      throw new BadRequestException('Недостаточно мест для бронирования!');
+    }
+
+    tourData[0].amount -= createBookedTourDto.amount;
     await this.mytourRepository.save(tourData);
 
     const newBookedTour = {
       sum: createBookedTourDto.sum,
+      amount: createBookedTourDto.amount,
       tour: createBookedTourDto.tour,
       user: createBookedTourDto.user,
     };

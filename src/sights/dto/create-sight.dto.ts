@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, IsArray } from 'class-validator';
-// import { SightImage } from 'src/sight-image/entities/sight-image.entity';
 import { Tour } from 'src/tour/entities/tour.entity';
 
 export class CreateSightDto {
@@ -26,9 +25,4 @@ export class CreateSightDto {
   @ApiProperty({ required: true, type: 'number' })
   @IsNotEmpty()
   tour: Tour;
-
-  // @ApiProperty({ type: 'number' })
-  // @IsOptional()
-  // imgList?: SightImage;
-
 }

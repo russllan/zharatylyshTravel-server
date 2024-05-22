@@ -29,6 +29,7 @@ export class TourService {
       img: createTourDto.img,
       description: createTourDto.description,
       location: createTourDto.location,
+      isApprove: createTourDto.isApprove,
       user: createTourDto.user,
     };
     if (!newTour) throw new BadRequestException('Something went wrond...');

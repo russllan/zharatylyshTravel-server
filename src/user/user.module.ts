@@ -3,22 +3,38 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-// import { MailerModule } from '@nestjs-modules/mailer';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     // MailerModule.forRoot({
-    //   transport: {
-    //     host: 'sandbox.smtp.mailtrap.io',
-    //     port: 465,
-    //     secure: false,
-    //     auth: {
-    //       user: '822b9bb355a752',
-    //       pass: 'feb330e0cec2e5'
-    //     }
-    //   },
+    //     transport: {
+    //       host: "smtp.gmail.com",
+    //       port: 587,
+    //       secure: false,
+    //       auth: {
+    //         user: "lotinsk@gmail.com",
+    //         pass: "",
+    //       },
+    //     },
     // }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        transport: {
+          host: configService.get<string>('MAIL_HOST'),
+          port: configService.get<number>('MAIL_PORT'),
+          secure: false,
+          auth: {
+            user: configService.get<string>('MAIL_USER'),
+            pass: configService.get<string>('MAIL_PASSWORD'),
+          },
+        },
+      }),
+    }),
   ],
   controllers: [UserController],
   providers: [UserService],

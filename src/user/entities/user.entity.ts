@@ -18,10 +18,10 @@ export class User {
     @Column()
     password: string
 
-    @Column({nullable: true})
-    confirmationCode: string
+    @Column({default: false})
+    confirmationCode: boolean
 
-    @Column()
+    @Column({default: "user"})
     role: string
 
     @Column({nullable: true})

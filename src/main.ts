@@ -21,7 +21,6 @@ async function bootstrap() {
   .addTag('review')
   .addTag('sight')
   .addTag('booked-tour')
-  .addTag('sight-image')
   .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
