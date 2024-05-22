@@ -9,16 +9,31 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
-    MailerModule.forRoot({
+    // MailerModule.forRoot({
+    //     transport: {
+    //       host: "smtp.gmail.com",
+    //       port: 587,
+    //       secure: false,
+    //       auth: {
+    //         user: "lotinsk@gmail.com",
+    //         pass: "",
+    //       },
+    //     },
+    // }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
         transport: {
-          host: "smtp.gmail.com",
-          port: 587,
+          host: configService.get<string>('MAIL_HOST'),
+          port: configService.get<number>('MAIL_PORT'),
           secure: false,
           auth: {
-            user: "lotinsk@gmail.com",
-            pass: "xwxg ppui hmpk yvmb",
+            user: configService.get<string>('MAIL_USER'),
+            pass: configService.get<string>('MAIL_PASSWORD'),
           },
         },
+      }),
     }),
   ],
   controllers: [UserController],
