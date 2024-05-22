@@ -7,7 +7,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.enableCors({
-    origin: 'https://skihub-server-production.up.railway.app/', // Разрешенный источник запросов (замените на свой домен)
+    origin: ['https://skihub-server-production.up.railway.app/', 'http://localhost:3000'], // Разрешенный источник запросов (замените на свой домен)
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Разрешенные методы HTTP
     allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки запросов
   });
@@ -21,7 +21,6 @@ async function bootstrap() {
   .addTag('review')
   .addTag('sight')
   .addTag('booked-tour')
-  .addTag('sight-image')
   .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

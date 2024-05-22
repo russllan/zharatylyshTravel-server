@@ -45,6 +45,10 @@ export class CreateTourDto {
 
   @ApiProperty()
   @IsOptional()
+  isApprove: boolean;
+
+  @ApiProperty()
+  @IsOptional()
   user: User
 
 }

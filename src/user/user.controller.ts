@@ -22,6 +22,12 @@ export class UserController {
   //   return this.userService.sendEmail();
   // }
 
+  @Post('send-activation-mail') 
+  async sendActivationMail(@Body() body: { to: string}) { 
+    const { to } = body; 
+    await this.userService.sendActivationMail(to); 
+  } 
+
   @Post('create')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
