@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { SightsService } from './sights.service';
 import { CreateSightDto } from './dto/create-sight.dto';
 import { UpdateSightDto } from './dto/update-sight.dto';
@@ -24,7 +24,7 @@ export class SightsController {
     return this.sightsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateSightDto: UpdateSightDto) {
     return this.sightsService.update(+id, updateSightDto);
   }

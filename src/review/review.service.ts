@@ -43,7 +43,12 @@ export class ReviewService {
   }
 
   async update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+    const review = await this.reviewRepository.findOne({
+      where: {id: id}
+    })
+    if(!review) throw new NotFoundException('Такого тура нет!');
+    Object.assign(review, updateReviewDto);
+    return await this.reviewRepository.save(review);
   }
 
   async remove(id: number) {

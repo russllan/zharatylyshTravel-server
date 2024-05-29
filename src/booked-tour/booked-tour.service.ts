@@ -69,7 +69,8 @@ export class BookedTourService {
       where: { id },
     });
     if (!bookedTour) throw new NotFoundException('Такой тур не заброинрован!');
-    return await this.bookedTourRepository.update(id, updateBookedTourDto);
+    Object.assign(bookedTour, updateBookedTourDto);
+    return await this.bookedTourRepository.save(bookedTour);
   }
 
   async remove(id: number) {
