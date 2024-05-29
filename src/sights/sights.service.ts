@@ -57,7 +57,8 @@ export class SightsService {
       where: { id: id },
     });
     if (!sight) throw new NotFoundException('Такой достопримечательности нет!');
-    return await this.sightsRepository.update(id, updateSightDto);
+    Object.assign(sight, updateSightDto);
+    return await this.sightsRepository.save(sight);
   }
 
   async remove(id: number) {

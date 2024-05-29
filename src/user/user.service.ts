@@ -98,7 +98,8 @@ export class UserService {
       where: { id: id },
     });
     if (!user) throw new NotFoundException('Такого пользователя нет!');
-    return await this.userRepository.update(id, updateUserDto);
+    Object.assign(user, updateUserDto);
+    return await this.userRepository.save(user);
   }
 
   async remove(id: number) {
