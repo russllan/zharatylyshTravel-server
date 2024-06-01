@@ -1,3 +1,4 @@
+import { Payment } from 'src/payment/entities/payment.entity';
 import { Tour } from 'src/tour/entities/tour.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -31,4 +33,8 @@ export class BookedTour {
   @ManyToOne(() => Tour, (tour) => tour.bookedTour, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'tour_id' })
   tour: Tour;
+
+  @OneToOne(() => Payment, (payment) => payment.bookedTour, {onDelete: 'CASCADE'})
+  @JoinColumn({name: 'payment_id'})
+  payments: Payment
 }

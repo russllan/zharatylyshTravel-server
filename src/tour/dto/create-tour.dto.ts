@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString, IsDateString, IsOptional } from 'class-validator';
 import { User } from 'src/user/entities/user.entity';
-import { Transform } from 'class-transformer';
 
 export class CreateTourDto {
   @ApiProperty()

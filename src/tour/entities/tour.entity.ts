@@ -52,4 +52,5 @@ export class Tour {
 
   @OneToMany(() => BookedTour, (bookedTour) => bookedTour.tour, {onDelete: 'CASCADE'})
   bookedTour: BookedTour[]
+
 }

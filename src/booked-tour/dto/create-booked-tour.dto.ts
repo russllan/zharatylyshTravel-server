@@ -23,4 +23,5 @@ export class CreateBookedTourDto {
   @IsNotEmpty()
   @IsNumber()
   tour: Tour;
+
 }
