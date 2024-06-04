@@ -6,21 +6,23 @@ import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Устанавливаем глобальный префикс для всех маршрутов
   app.setGlobalPrefix('api');
-  app.use(urlencoded({extended: true, limit: '50mb'}))
-  app.use(bodyParser.json({limit: '50mb'}));
+
+  // Настройки body-parser для увеличения лимита размера тела запроса
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
+  app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
+  // Настройки CORS
   app.enableCors({
-    origin: [
-      'https://zharatylyshtravel-server-production.up.railway.app',
-      'http://localhost:3000',
-      'http://localhost:5173',
-    ], // Разрешенный источник запросов (замените на свой домен)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'patch', 'OPTIONS', 'HEAD'], // Разрешенные методы HTTP
+    origin: '*', // Разрешенный источник запросов (замените на свой домен)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'], // Разрешенные методы HTTP
     allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки запросов
   });
 
+  // Настройки Swagger
   const config = new DocumentBuilder()
     .setTitle('zharatylysh-server')
     .setDescription('The zharatylysh API description')
@@ -34,6 +36,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  // Запуск сервера
   await app.listen(process.env.PORT || 3001);
 }
 bootstrap();
