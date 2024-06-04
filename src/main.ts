@@ -12,11 +12,7 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
   app.enableCors({
-    origin: [
-      'https://zharatylyshtravel-server-production.up.railway.app',
-      'http://localhost:3000',
-      'http://localhost:5173',
-    ], // Разрешенный источник запросов (замените на свой домен)
+    origin: "*", // Разрешенный источник запросов (замените на свой домен)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'patch', 'OPTIONS', 'HEAD'], // Разрешенные методы HTTP
     allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки запросов
   });
