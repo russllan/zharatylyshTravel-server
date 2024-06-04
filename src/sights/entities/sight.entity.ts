@@ -24,6 +24,7 @@ export class Sight {
     @JoinColumn({name: 'user_id'})
     user: User
 
-    @ManyToMany(() => Tour, (tour) => tour.sights, {onDelete: 'CASCADE'})
+    @ManyToOne(() => Tour, (tour) => tour.sights, {onDelete: 'CASCADE'})
+    @JoinColumn({name: 'tour_id'})
     tour: Tour
 }

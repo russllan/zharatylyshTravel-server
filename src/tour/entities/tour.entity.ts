@@ -47,8 +47,7 @@ export class Tour {
   @JoinColumn({name: 'user_id'})
   user: User
 
-  @ManyToMany(() => Sight, (sight) => sight.tour, {onDelete: 'CASCADE'})
-  @JoinColumn({name: 'sight_id'})
+  @OneToMany(() => Sight, (sight) => sight.tour, {onDelete: 'CASCADE'})
   sights: Sight[]
 
   @OneToMany(() => BookedTour, (bookedTour) => bookedTour.tour, {onDelete: 'CASCADE'})
