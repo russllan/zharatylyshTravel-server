@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Review } from "../../review/entities/review.entity";
 import { User } from "src/user/entities/user.entity";
 import { Sight } from "src/sights/entities/sight.entity";
@@ -47,7 +47,8 @@ export class Tour {
   @JoinColumn({name: 'user_id'})
   user: User
 
-  @OneToMany(() => Sight, (sight) => sight.tour, {onDelete: 'CASCADE'})
+  @ManyToMany(() => Sight, (sight) => sight.tour, {onDelete: 'CASCADE'})
+  @JoinColumn({name: 'sight_id'})
   sights: Sight[]
 
   @OneToMany(() => BookedTour, (bookedTour) => bookedTour.tour, {onDelete: 'CASCADE'})
