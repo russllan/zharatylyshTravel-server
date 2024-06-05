@@ -22,9 +22,12 @@ export class UserService {
       await this.mailService.sendMail({
         from: 'lotinsk@gmail.com',
         to,
-        subject: 'Activation link',
-        text: `Your activation link is:`,
-        html: `<a href=${`http://localhost:3000/`}>Your activation}</a>`,
+        subject: 'registration success',
+        text: `Zharatylysh`,
+        html: `<p>Здравствуйте,</p>
+        <p>Добро пожаловать в Zharatylysh! Мы рады приветствовать вас в нашем сообществе.</p>
+        <p>Спасибо, что выбрали Zharatylysh!</p>
+        <p>С наилучшими пожеланиями,<br/>Команда Zharatylysh</p>`,
       });
     } catch (error) {
       return error;
