@@ -52,7 +52,7 @@ export class BookedTourService {
 
     const paymentIntent = await this.stripe.paymentIntents.create({
       amount: tourData[0].price * createBookedTourDto.amount,
-      currency: 'kgs',
+      currency: 'KGS',
     });
 
     const newBookedTour = {
