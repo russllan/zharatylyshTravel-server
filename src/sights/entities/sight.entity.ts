@@ -1,6 +1,6 @@
 import { Tour } from "src/tour/entities/tour.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('sight')
 export class Sight {
